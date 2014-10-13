@@ -1,3 +1,6 @@
 [submodule "ActiveRights/Scripts/Metro-UI-CSS"]
 	path = ActiveRights/Scripts/Metro-UI-CSS
 	url = https://github.com/olton/Metro-UI-CSS.git
+[submodule "ActiveRights/Scripts/jquery-treegrid"]
+	path = ActiveRights/Scripts/jquery-treegrid
+	url = https://github.com/maxazan/jquery-treegrid.git
