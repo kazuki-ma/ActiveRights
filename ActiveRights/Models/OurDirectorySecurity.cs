@@ -12,15 +12,15 @@ namespace ActiveRights.Models
     public class OurDirectorySecurity
     {
         public DirectorySecurity DirectorySecurity;
-        public AuthorizationRuleCollection AccessRule;
-        public AuthorizationRuleCollection AuditRule;
+        public AuthorizationRuleCollection AccessRules;
+        public AuthorizationRuleCollection AuditRules;
 
 
         public OurDirectorySecurity(DirectoryInfo directoryInfo)
         {
             DirectorySecurity = directoryInfo.GetAccessControl();
-            AccessRule = DirectorySecurity.GetAccessRules(true, true, typeof(System.Security.Principal.NTAccount));
-            AuditRule = DirectorySecurity.GetAuditRules(true, true, typeof(System.Security.Principal.NTAccount));
+            AccessRules = DirectorySecurity.GetAccessRules(true, true, typeof(System.Security.Principal.NTAccount));
+            AuditRules = DirectorySecurity.GetAuditRules(true, true, typeof(System.Security.Principal.NTAccount));
         }
     }
 }

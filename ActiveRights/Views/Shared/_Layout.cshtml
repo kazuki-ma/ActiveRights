@@ -13,7 +13,7 @@
         <nav class="navigation-bar-content">
             <item class="element">アクセス権管理ツール</item>
             <item class="element-divider">...</item>
-            <item class="element">...</item>
+            <item class="element"></item>
         </nav>
     </nav>
 
@@ -23,8 +23,20 @@
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
-    @RenderSection("scripts", required: false)
+    <link rel="stylesheet" href="~/Content/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/Content/bootstrap-theme.min.css" />
+
     <link rel="stylesheet" href="~/Scripts/Metro-UI-CSS/css/metro-bootstrap.css" />
     <script type="text/javascript" src="~/Scripts/Metro-UI-CSS/min/metro.min.js"></script>
+    <script type="text/javascript" src="~/Scripts/jquery.dynatree/jquery.dynatree.min.js"></script>
+    <link rel="stylesheet" href="~/Scripts/jquery.dynatree/skin-vista/ui.dynatree.css" />
+
+    <script src="~/Scripts/jquery.jqGrid.min.js"></script>
+    <link rel="stylesheet" href="~/Content/jquery.jqGrid/ui.jqgrid.css" />
+
+    <link rel="stylesheet" href="~/Scripts/jquery-treegrid/css/jquery.treegrid.css" />
+    <script type="text/javascript" src="~/Scripts/jquery-treegrid/js/jquery.treegrid.js"></script>
+    <script type="text/javascript" src="~/Scripts/jquery-treegrid/js/jquery.treegrid.bootstrap3.js"></script>
+    @RenderSection("scripts", required: false)
 </body>
 </html>

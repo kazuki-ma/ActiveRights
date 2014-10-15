@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -20,6 +21,7 @@
     <IISExpressAnonymousAuthentication>enabled</IISExpressAnonymousAuthentication>
     <IISExpressWindowsAuthentication>enabled</IISExpressWindowsAuthentication>
     <IISExpressUseClassicPipelineMode>false</IISExpressUseClassicPipelineMode>
+    <TypeScriptToolsVersion>1.0</TypeScriptToolsVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -162,6 +164,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\HelpPage\HelpPage.css" />
+    <Content Include="Content\bootstrap-theme.css" />
+    <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\jquery.jqGrid\ui.jqgrid.css" />
@@ -201,8 +205,6 @@
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
-    <Content Include="Scripts\bootstrap.js" />
-    <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Areas\HelpPage\Views\Web.config" />
     <Content Include="Areas\HelpPage\Views\Shared\_Layout.cshtml" />
     <Content Include="Areas\HelpPage\Views\Help\ResourceModel.cshtml" />
@@ -222,6 +224,11 @@
     <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\CollectionModelDescription.cshtml" />
     <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\ApiGroup.cshtml" />
     <Content Include="Areas\HelpPage\Views\Help\Api.cshtml" />
+    <Content Include="Scripts\bootstrap.js" />
+    <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Scripts\Home\Index.css">
+      <DependentUpon>Index.less</DependentUpon>
+    </Content>
     <Content Include="Scripts\i18n\grid.locale-ar.js" />
     <Content Include="Scripts\i18n\grid.locale-bg.js" />
     <Content Include="Scripts\i18n\grid.locale-bg1251.js" />
@@ -265,11 +272,72 @@
     <Content Include="Scripts\i18n\grid.locale-tw.js" />
     <Content Include="Scripts\i18n\grid.locale-ua.js" />
     <Content Include="Scripts\i18n\grid.locale-vi.js" />
+    <Content Include="Scripts\Home\Index.less" />
+    <Content Include="Scripts\Home\Index.css.map">
+      <DependentUpon>Index.css</DependentUpon>
+    </Content>
+    <Content Include="fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Content\bootstrap-theme.css.map" />
+    <Content Include="Content\bootstrap.css.map" />
+    <Content Include="App_Code\GlyphIcon.cshtml" />
     <None Include="Scripts\jquery-2.1.1.intellisense.js" />
     <Content Include="Scripts\jquery-2.1.1.js" />
     <Content Include="Scripts\jquery-2.1.1.min.js" />
+    <Content Include="Scripts\jquery-treegrid\.gitignore" />
+    <Content Include="Scripts\jquery-treegrid\CHANGELOG.txt" />
+    <Content Include="Scripts\jquery-treegrid\css\jquery.treegrid.css" />
+    <Content Include="Scripts\jquery-treegrid\examples\bootstrap-2.3.2\css\bootstrap-responsive.css" />
+    <Content Include="Scripts\jquery-treegrid\examples\bootstrap-2.3.2\css\bootstrap-responsive.min.css" />
+    <Content Include="Scripts\jquery-treegrid\examples\bootstrap-2.3.2\css\bootstrap.css" />
+    <Content Include="Scripts\jquery-treegrid\examples\bootstrap-2.3.2\css\bootstrap.min.css" />
+    <Content Include="Scripts\jquery-treegrid\examples\bootstrap-2.3.2\img\glyphicons-halflings-white.png" />
+    <Content Include="Scripts\jquery-treegrid\examples\bootstrap-2.3.2\img\glyphicons-halflings.png" />
+    <Content Include="Scripts\jquery-treegrid\examples\bootstrap-2.3.2\js\bootstrap.js" />
+    <Content Include="Scripts\jquery-treegrid\examples\bootstrap-2.3.2\js\bootstrap.min.js" />
+    <Content Include="Scripts\jquery-treegrid\examples\bootstrap-3.0.0\css\bootstrap-theme.css" />
+    <Content Include="Scripts\jquery-treegrid\examples\bootstrap-3.0.0\css\bootstrap-theme.min.css" />
+    <Content Include="Scripts\jquery-treegrid\examples\bootstrap-3.0.0\css\bootstrap.css" />
+    <Content Include="Scripts\jquery-treegrid\examples\bootstrap-3.0.0\css\bootstrap.min.css" />
+    <Content Include="Scripts\jquery-treegrid\examples\bootstrap-3.0.0\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Scripts\jquery-treegrid\examples\bootstrap-3.0.0\js\bootstrap.js" />
+    <Content Include="Scripts\jquery-treegrid\examples\bootstrap-3.0.0\js\bootstrap.min.js" />
+    <Content Include="Scripts\jquery-treegrid\examples\example-basic.html" />
+    <Content Include="Scripts\jquery-treegrid\examples\example-bootstrap-2.html" />
+    <Content Include="Scripts\jquery-treegrid\examples\example-bootstrap-3.html" />
+    <Content Include="Scripts\jquery-treegrid\examples\example-column.html" />
+    <Content Include="Scripts\jquery-treegrid\examples\example-events.html" />
+    <Content Include="Scripts\jquery-treegrid\examples\example-save-state.html" />
+    <Content Include="Scripts\jquery-treegrid\img\collapse.png" />
+    <Content Include="Scripts\jquery-treegrid\img\expand.png" />
+    <Content Include="Scripts\jquery-treegrid\img\file.png" />
+    <Content Include="Scripts\jquery-treegrid\img\folder.png" />
+    <Content Include="Scripts\jquery-treegrid\index.html" />
+    <Content Include="Scripts\jquery-treegrid\js\jquery.cookie.js" />
+    <Content Include="Scripts\jquery-treegrid\js\jquery.treegrid.bootstrap2.js" />
+    <Content Include="Scripts\jquery-treegrid\js\jquery.treegrid.bootstrap3.js" />
+    <Content Include="Scripts\jquery-treegrid\js\jquery.treegrid.js" />
+    <Content Include="Scripts\jquery-treegrid\styles.css" />
+    <Content Include="Scripts\jquery-treegrid\test.html" />
+    <Content Include="Scripts\jquery-treegrid\tests\qunit-1.12.0.css" />
+    <Content Include="Scripts\jquery-treegrid\tests\qunit-1.12.0.js" />
+    <Content Include="Scripts\jquery-treegrid\tests\tests.js" />
     <Content Include="Scripts\jquery-ui-1.11.1.js" />
     <Content Include="Scripts\jquery-ui.min-1.11.1.js" />
+    <Content Include="Scripts\jquery.dynatree\GPL-LICENSE.txt" />
+    <Content Include="Scripts\jquery.dynatree\jquery.dynatree.js" />
+    <Content Include="Scripts\jquery.dynatree\jquery.dynatree.min.js" />
+    <Content Include="Scripts\jquery.dynatree\MIT-License.txt" />
+    <Content Include="Scripts\jquery.dynatree\skin-vista\icons.gif" />
+    <Content Include="Scripts\jquery.dynatree\skin-vista\loading.gif" />
+    <Content Include="Scripts\jquery.dynatree\skin-vista\ui.dynatree.css" />
+    <Content Include="Scripts\jquery.dynatree\skin\icons-rtl.gif" />
+    <Content Include="Scripts\jquery.dynatree\skin\icons.gif" />
+    <Content Include="Scripts\jquery.dynatree\skin\loading.gif" />
+    <Content Include="Scripts\jquery.dynatree\skin\ui.dynatree.css" />
+    <Content Include="Scripts\jquery.dynatree\skin\vline-rtl.gif" />
+    <Content Include="Scripts\jquery.dynatree\skin\vline.gif" />
     <Content Include="Scripts\jquery.jqGrid.min.js" />
     <Content Include="Scripts\jquery.jqGrid.src.js" />
     <Content Include="Scripts\Metro-UI-CSS\.gitignore" />
@@ -775,12 +843,23 @@
     <Content Include="Scripts\Metro-UI-CSS\README.md" />
     <Content Include="Scripts\Metro-UI-CSS\switch.cmd" />
     <Content Include="Scripts\jquery-2.1.1.min.map" />
+    <Content Include="Scripts\jquery-treegrid\.git" />
+    <Content Include="Scripts\jquery-treegrid\composer.json" />
+    <Content Include="Scripts\jquery-treegrid\examples\bootstrap-3.0.0\fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Scripts\jquery-treegrid\examples\bootstrap-3.0.0\fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="Scripts\jquery-treegrid\examples\bootstrap-3.0.0\fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="Scripts\jquery-treegrid\LICENSE" />
+    <Content Include="Scripts\jquery-treegrid\params.json" />
+    <Content Include="Scripts\jquery-treegrid\README.md" />
+    <Content Include="Scripts\jquery-treegrid\treegrid.jquery.json" />
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
-    <Content Include="fonts\glyphicons-halflings-regular.woff" />
-    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
-    <Content Include="fonts\glyphicons-halflings-regular.eot" />
+    <TypeScriptCompile Include="Scripts\typings\jquery.dynatree\jquery.dynatree.d.ts" />
+    <TypeScriptCompile Include="Scripts\typings\jqueryui\jqueryui.d.ts" />
+    <TypeScriptCompile Include="Scripts\typings\jquery\jquery.d.ts" />
+    <TypeScriptCompile Include="Scripts\Home\Index.ts" />
+  </ItemGroup>
+  <ItemGroup>
     <Content Include="packages.config" />
     <None Include="Project_Readme.html" />
   </ItemGroup>
@@ -789,6 +868,7 @@
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
   </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets')" />
   <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
   <Target Name="MvcBuildViews" AfterTargets="AfterBuild" Condition="'$(MvcBuildViews)'=='true'">
