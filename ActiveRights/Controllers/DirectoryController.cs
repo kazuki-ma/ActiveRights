@@ -39,7 +39,9 @@ namespace ActiveRights.Controllers
                             addClass += " hasUniqueAce ";
                         }
                     }
-                    catch (UnauthorizedAccessException e) { }
+                    catch (UnauthorizedAccessException) {
+                        addClass += " hasUniqueAce ";
+                    }
                 }
 
             }

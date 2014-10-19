@@ -1,16 +1,55 @@
-﻿<div class="row">
-    <div class="col-md-4">
-        <div id="tree"></div>
-    </div>
-    <div class="col-md-8">
+﻿<table style="width: 100%; max-height: 900px; table-layout: fixed;">
+    <tr>
+        <td style="vertical-align: top; overflow: hidden;" width="300">
+            <div id="tree" style="max-height: 900px; overflow-y: scroll;"></div>
+        </td>
+        <td style="vertical-align: top;">
+            <table id="acltree" class="table hovered" style="table-layout:fixed;">
+                <thead>
+                    <tr>
+                        <th width="50">
+                            種類
+                        </th>
+                        <th width="200">
+                            プリンシパル
+                        </th>
+                        <th>
+                            アクセス
+                        </th>
+                        <th width="70">
+                            継承
+                        </th>
+                        <th width="70">
+                            適用先
+                        </th>
+                    </tr>
+                </thead>
+                <tfoot style="display:none;">
+                </tfoot>
+                <tbody></tbody>
+            </table>
 
-        <table id="acltree">
-            <tbody>
+        </td>
+    </tr>
+</table>
 
-            </tbody>
-        </table>
-    </div>
-</div>
+<script id="access_rule_template" type="text/template">
+    <td>
+        許可
+    </td>
+    <td>
+        <%- IdentityReference.Value %>
+    </td>
+    <td>
+        <%- FileSystemRights %>
+    </td>
+    <td>
+        <%- IsInherited %>
+    </td>
+    <td class="colPropagation">
+        <%- PropagationFlags %>
+    </td>
+</script>
 
 @section scripts {
     <script src="~/Scripts/Home/Index.js"></script>

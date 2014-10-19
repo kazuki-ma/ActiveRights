@@ -228,6 +228,8 @@
     <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\CollectionModelDescription.cshtml" />
     <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\ApiGroup.cshtml" />
     <Content Include="Areas\HelpPage\Views\Help\Api.cshtml" />
+    <Content Include="Scripts\backbone.js" />
+    <Content Include="Scripts\backbone.min.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\Home\Index.css">
@@ -286,6 +288,7 @@
     <Content Include="Content\bootstrap-theme.css.map" />
     <Content Include="Content\bootstrap.css.map" />
     <Content Include="App_Code\GlyphIcon.cshtml" />
+    <Content Include="Scripts\backbone.min.map" />
     <None Include="Scripts\jquery-2.1.1.intellisense.js" />
     <Content Include="Scripts\jquery-2.1.1.js" />
     <Content Include="Scripts\jquery-2.1.1.min.js" />
@@ -344,6 +347,14 @@
     <Content Include="Scripts\jquery.dynatree\skin\vline.gif" />
     <Content Include="Scripts\jquery.jqGrid.min.js" />
     <Content Include="Scripts\jquery.jqGrid.src.js" />
+    <Content Include="Scripts\knockback-core.js" />
+    <Content Include="Scripts\knockback-core.min.js" />
+    <Content Include="Scripts\knockback-full-stack.js" />
+    <Content Include="Scripts\knockback-full-stack.min.js" />
+    <Content Include="Scripts\knockback.js" />
+    <Content Include="Scripts\knockback.min.js" />
+    <Content Include="Scripts\knockout-3.1.0.debug.js" />
+    <Content Include="Scripts\knockout-3.1.0.js" />
     <Content Include="Scripts\Metro-UI-CSS\.gitignore" />
     <Content Include="Scripts\Metro-UI-CSS\compress\compressor.js" />
     <Content Include="Scripts\Metro-UI-CSS\compress\node_modules\node-minify\examples\public\css\base.css" />
@@ -699,6 +710,8 @@
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
+    <Content Include="Scripts\underscore-min.js" />
+    <Content Include="Scripts\underscore.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -856,12 +869,16 @@
     <Content Include="Scripts\jquery-treegrid\params.json" />
     <Content Include="Scripts\jquery-treegrid\README.md" />
     <Content Include="Scripts\jquery-treegrid\treegrid.jquery.json" />
+    <Content Include="Scripts\underscore-min.map" />
   </ItemGroup>
   <ItemGroup>
+    <TypeScriptCompile Include="Scripts\typings\backbone-relational\backbone-relational.d.ts" />
+    <TypeScriptCompile Include="Scripts\typings\backbone\backbone.d.ts" />
     <TypeScriptCompile Include="Scripts\typings\jquery.dynatree\jquery.dynatree.d.ts" />
     <TypeScriptCompile Include="Scripts\typings\jqueryui\jqueryui.d.ts" />
     <TypeScriptCompile Include="Scripts\typings\jquery\jquery.d.ts" />
     <TypeScriptCompile Include="Scripts\Home\Index.ts" />
+    <TypeScriptCompile Include="Scripts\typings\underscore\underscore.d.ts" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

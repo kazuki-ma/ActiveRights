@@ -22,7 +22,7 @@ namespace ActiveRights
                       "~/Scripts/respond.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
-                      "~/Content/bootstrap.css",
+//                      "~/Content/bootstrap.css",
                       "~/Content/site.css"));
 
             // デバッグを行うには EnableOptimizations を false に設定します。詳細については、
