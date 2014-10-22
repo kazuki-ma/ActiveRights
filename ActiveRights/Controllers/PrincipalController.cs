@@ -15,7 +15,7 @@ namespace ActiveRights.Controllers
         public OurPrincipal GetMembers(string identity, string unc)
         {
             ContextType[] cts = {
-                                    //ContextType.Domain,
+                                    ContextType.Domain,
                                     ContextType.Machine
                                 };
 

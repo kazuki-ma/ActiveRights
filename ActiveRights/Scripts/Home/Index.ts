@@ -62,6 +62,23 @@ class AccessRule extends Backbone.Model {
 }
 
 class AccessRules extends Backbone.Collection<AccessRule> {
+    private unc: string;
+
+
+    url = (v) => {
+        console.log(v);
+        return "/api/DirectorySecurity?unc=" + this.unc;
+    };
+
+    public parse(response: DirectorySecurityInfo, object) {
+        return response.AccessRules;
+    }
+
+    constructor(unc:string) {
+        super();
+        this.unc = unc;
+        this.model = AccessRule;
+    }
 }
 
 
@@ -253,9 +270,29 @@ module WinApi {
     }
 }
 
+class IPrincipal {
+    displayName: string;
+    guid: string;
+    members: IPrincipal[];
+    sAMAccountName: string;
+    sIDString: string;
+}
+
+class Principal extends Backbone.Model {
+    attributes: IPrincipal;
+
+    //public urlRoot () {
+    //    return '';
+    //}
+    public url = () => {
+        return "/api/principal/members?unc=&identity=" + this.attributes.id;
+    };
+}
+
 class AccessRuleView extends Backbone.View<AccessRule> {
     template: (...any) => string;
     model: AccessRule;
+    
     
     constructor(options?: Backbone.ViewOptions<AccessRule>) {
         this.tagName = "tr";
@@ -263,6 +300,23 @@ class AccessRuleView extends Backbone.View<AccessRule> {
         this.events = <any>{
             "click": () => {
                 console.log(this);
+            },
+            "click .node_opener": (v) => {
+                this.$el
+                    .toggleClass("closed")
+                ;
+                if (this.$el.hasClass("closed")) {
+                    
+                }
+
+                var p = new Principal({ id: this.model.attributes.IdentityReference.Value });
+                p.fetch().done(() => {
+                    p.attributes.members.forEach((member) => {
+                        var $new = this.$el.clone();
+                        $new.find(".principal").text(member.displayName || member.sAMAccountName);
+                        $new.insertAfter(this.$el);
+                    });
+                });
             }
         };
         super(options);
@@ -273,7 +327,7 @@ class AccessRuleView extends Backbone.View<AccessRule> {
         this.$el
             .html(this.template($.extend({}, this.model.toJSON())))
      //       .attr(<Object> this.model.attributes)
-            .addClass(this.model.attributes.IsInherited ? "inherited" : "unique")
+            .addClass("closed " + (this.model.attributes.IsInherited ? "inherited" : "unique"))
         ;
 
         var applyOnto = this.model.getApplyOnto();
@@ -297,20 +351,12 @@ function ShowAcl(unc: string) {
     var $aclTree = $("#acltree"),
         $tbody = $aclTree.find("tbody");
 
-    var securityRequest = $.ajax("/api/directorysecurity", {
-        data: {
-            unc: unc,
-        },
-    });
-
-
-
-    $tbody.empty();
-    securityRequest.done((data: DirectorySecurityInfo) => {
-        
-        data.AccessRules.forEach((rule) => {
+    var accessRules = new AccessRules(unc);
+    window.ac = accessRules;
+    accessRules.fetch().done(() => {
+        accessRules.forEach((rule) => {
             var view = new AccessRuleView({
-                model: new AccessRule(rule)
+                model: rule
             });
 
 
@@ -319,6 +365,7 @@ function ShowAcl(unc: string) {
         });
     });
 
+    $tbody.empty();
 }
 
 setTimeout(() => {

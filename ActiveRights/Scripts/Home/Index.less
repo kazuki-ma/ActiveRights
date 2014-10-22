@@ -5,6 +5,36 @@ ul.dynatree-container {
     border: none;
 }
 
-.hasUniqueAce a.dynatree-title{
+.hasUniqueAce a.dynatree-title {
     color: red;
+}
+
+.node_opener {
+    display: inline-block;
+    position: relative;
+    float: left;
+    margin-right: 3px;
+    width: 10px;
+    height: 10px;
+
+    tr.closed &::before {
+        -webkit-transform: rotate(-45deg);
+        -moz-transform: rotate(-45deg);
+        -ms-transform: rotate(-45deg);
+        -o-transform: rotate(-45deg);
+        transform: rotate(-45deg);
+        margin-left: -4px;
+    }
+
+    &::before {
+        display: block;
+        left: 2px;
+        top: 0;
+        content: '';
+        width: 0;
+        height: 0;
+        border-left: 7px solid transparent;
+        border-top: 7px solid transparent;
+        border-bottom: 7px #FF0000 solid;
+    }
 }

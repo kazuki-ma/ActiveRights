@@ -7,7 +7,7 @@
             <table id="acltree" class="table hovered" style="table-layout:fixed;">
                 <thead>
                     <tr>
-                        <th width="50">
+                        <th width="70">
                             種類
                         </th>
                         <th width="200">
@@ -35,9 +35,12 @@
 
 <script id="access_rule_template" type="text/template">
     <td>
+        <span class="node_opener">
+
+        </span>
         許可
     </td>
-    <td>
+    <td class="principal">
         <%- IdentityReference.Value %>
     </td>
     <td>

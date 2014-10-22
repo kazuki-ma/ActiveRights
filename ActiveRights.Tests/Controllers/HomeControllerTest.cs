@@ -11,15 +11,18 @@ namespace ActiveRights.Tests.Controllers
         [TestMethod]
         public void Index()
         {
-            // 準備
-            HomeController controller = new HomeController();
 
-            // 実行
-            ViewResult result = controller.Index() as ViewResult;
+            var db = new ACEApproval();
+            db.Database.Delete();
+            db.Database.Initialize(true);
+            {
+                var a = db.Folders.Create();
+                a.Unc = "";
+                db.Folders.Add(a);
+                db.SaveChanges();
+            }
 
-            // アサート
-            Assert.IsNotNull(result);
-            Assert.AreEqual("Home Page", result.ViewBag.Title);
+            Assert.IsTrue(true);
         }
     }
 }

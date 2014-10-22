@@ -31,10 +31,9 @@ namespace ActiveRights.Models
 
             if (recurse && (principal is GroupPrincipal))
             {
-                this.members = new List<OurPrincipal>();
-
-
-                var t = (principal as GroupPrincipal).GetUnderlyingObject();
+                this.members = (from member in (principal as GroupPrincipal).Members
+                               select new OurPrincipal(member, false)).ToList()
+                               ;
                 
             }
         }

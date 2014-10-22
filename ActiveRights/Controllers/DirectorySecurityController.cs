@@ -10,6 +10,7 @@ namespace ActiveRights.Controllers
     using ActiveRights.Models;
     using System.IO;
     using System.Security.AccessControl;
+    using System.Security.Principal;
 
     public class DirectorySecurityController : ApiController
     {
@@ -18,35 +19,83 @@ namespace ActiveRights.Controllers
             return new Models.OurDirectorySecurity(new DirectoryInfo(unc));
         }
 
+
+        public class OurAccessRuleModification
+        {
+            public Models.Ace From;
+            public Models.Ace To;
+
+            //public bool modifiAccessRule(FileSystemSecurity security) {
+            //    if (From == null && To == null)
+            //        return false;
+
+            //    if (From == null)
+            //        security.ModifyAccessRule(AccessControlModification.Add, To, null);
+            //}
+            public String Unc
+            {
+                set
+                {
+                    if (From != null)
+                    {
+                        From.Unc = value;
+                    }
+                    if (To != null)
+                    {
+                        To.Unc = value;
+                    }
+                }
+            }
+
+            public bool modifyAccessControl(FileSystemSecurity security)
+            {
+                if (From == null && To == null)
+                    return true;
+                
+                bool modified = false;
+                
+                if(From != null)
+                {
+                    security.ModifyAccessRule(AccessControlModification.Remove, From.getAccessRule(), out modified);
+                }
+                if (To != null)
+                {
+                    security.ModifyAccessRule(AccessControlModification.Add, To.getAccessRule(), out modified);
+                }
+
+                return modified;
+            }
+        }
+
         public class OurAccessRuleModify
         {
-            public OurAccessRuleModify()
-            {
-
-            }
-            public string Test { get; set; }
-            public AccessControlModification AccessControlModification { get; set; }
+            public List<OurAccessRuleModification> modifications { get; set; }
         }
 
         public void Post([FromUri] string unc, OurAccessRuleModify accessRuleModifies)
         {
             var fileSystemInfo = new DirectoryInfo(unc);
             var accessControl = fileSystemInfo.GetAccessControl(AccessControlSections.Access);
-            if (null == accessRuleModifies)
+
+            using (var db = new ACEApproval())
             {
-                return;
+                foreach (OurAccessRuleModification modification in accessRuleModifies.modifications)
+                {
+                    bool modified = modification.modifyAccessControl(accessControl);
+
+                    if (modified)
+                    {
+                        var ace = modification.To;
+                        ace.Aprover = WindowsIdentity.GetCurrent().User.Value;
+                        ace.EffectsBeginSchedule = ace.ApprovedDate = DateTime.Now;
+                        ace.EffectsBegined = true;
+                        ace.Unc = unc;
+
+                        db.Aces.Add(ace);
+                        db.SaveChanges();
+                    }
+                }
             }
-
-            //foreach (OurAccessRuleModify accessRuleModify in accessRuleModifies)
-            //{
-            //    bool isSuccess;
-
-            //    //accessControl.ModifyAccessRule(
-            //    //    accessRuleModify.AccessControlModification,
-            //    //    accessRuleModify.AccessRule,
-            //    //    out isSuccess
-            //    //    );
-            //}
 
             fileSystemInfo.SetAccessControl(accessControl);
         }

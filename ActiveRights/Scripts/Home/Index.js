@@ -51,9 +51,19 @@ var AccessRule = (function (_super) {
 
 var AccessRules = (function (_super) {
     __extends(AccessRules, _super);
-    function AccessRules() {
-        _super.apply(this, arguments);
+    function AccessRules(unc) {
+        var _this = this;
+        _super.call(this);
+        this.url = function (v) {
+            console.log(v);
+            return "/api/DirectorySecurity?unc=" + _this.unc;
+        };
+        this.unc = unc;
+        this.model = AccessRule;
     }
+    AccessRules.prototype.parse = function (response, object) {
+        return response.AccessRules;
+    };
     return AccessRules;
 })(Backbone.Collection);
 
@@ -183,6 +193,27 @@ var WinApi;
     var InheritanceFlags = WinApi.InheritanceFlags;
 })(WinApi || (WinApi = {}));
 
+var IPrincipal = (function () {
+    function IPrincipal() {
+    }
+    return IPrincipal;
+})();
+
+var Principal = (function (_super) {
+    __extends(Principal, _super);
+    function Principal() {
+        _super.apply(this, arguments);
+        var _this = this;
+        //public urlRoot () {
+        //    return '';
+        //}
+        this.url = function () {
+            return "/api/principal/members?unc=&identity=" + _this.attributes.id;
+        };
+    }
+    return Principal;
+})(Backbone.Model);
+
 var AccessRuleView = (function (_super) {
     __extends(AccessRuleView, _super);
     function AccessRuleView(options) {
@@ -192,13 +223,27 @@ var AccessRuleView = (function (_super) {
         this.events = {
             "click": function () {
                 console.log(_this);
+            },
+            "click .node_opener": function (v) {
+                _this.$el.toggleClass("closed");
+                if (_this.$el.hasClass("closed")) {
+                }
+
+                var p = new Principal({ id: _this.model.attributes.IdentityReference.Value });
+                p.fetch().done(function () {
+                    p.attributes.members.forEach(function (member) {
+                        var $new = _this.$el.clone();
+                        $new.find(".principal").text(member.displayName || member.sAMAccountName);
+                        $new.insertAfter(_this.$el);
+                    });
+                });
             }
         };
         _super.call(this, options);
     }
     AccessRuleView.prototype.render = function () {
         var _this = this;
-        this.$el.html(this.template($.extend({}, this.model.toJSON()))).addClass(this.model.attributes.IsInherited ? "inherited" : "unique");
+        this.$el.html(this.template($.extend({}, this.model.toJSON()))).addClass("closed " + (this.model.attributes.IsInherited ? "inherited" : "unique"));
 
         var applyOnto = this.model.getApplyOnto();
         $.each(applyOnto, function (idx, val) {
@@ -221,23 +266,20 @@ var ACE = (function (_super) {
 function ShowAcl(unc) {
     var $aclTree = $("#acltree"), $tbody = $aclTree.find("tbody");
 
-    var securityRequest = $.ajax("/api/directorysecurity", {
-        data: {
-            unc: unc
-        }
-    });
-
-    $tbody.empty();
-    securityRequest.done(function (data) {
-        data.AccessRules.forEach(function (rule) {
+    var accessRules = new AccessRules(unc);
+    window.ac = accessRules;
+    accessRules.fetch().done(function () {
+        accessRules.forEach(function (rule) {
             var view = new AccessRuleView({
-                model: new AccessRule(rule)
+                model: rule
             });
 
             $tbody.append(view.render().$el);
             return;
         });
     });
+
+    $tbody.empty();
 }
 
 setTimeout(function () {
